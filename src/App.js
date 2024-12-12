@@ -1,32 +1,21 @@
+import { Routes, Route } from "react-router-dom";
+import Home from "./routes/home/home.component";
+import Navigation from "./routes/navigation/navigation.component";
+import { SignIn } from "./routes/sign-in/sign-in.component";
+
+const Shop = () => {
+  return <div>I'm the Shop component</div>;
+};
+
 const App = () => {
   return (
-    <div className="categories-container">
-      <div className="category-item">
-        {/* <img /> */}
-        <h2>Hats</h2>
-        <p>Shop Now</p>
-      </div>
-      <div className="category-item">
-        {/* <img /> */}
-        <h2>Jackets</h2>
-        <p>Shop Now</p>
-      </div>
-      <div className="category-item">
-        {/* <img /> */}
-        <h2>Sneakers</h2>
-        <p>Shop Now</p>
-      </div>
-      <div className="category-item">
-        {/* <img /> */}
-        <h2>Womans</h2>
-        <p>Shop Now</p>
-      </div>
-      <div className="category-item">
-        {/* <img /> */}
-        <h2>Mans</h2>
-        <p>Shop Now</p>
-      </div>
-    </div>
+    <Routes>
+      <Route path="/" element={<Navigation />}>
+        <Route index element={<Home />} />
+        <Route path="shop" element={<Shop />} />
+        <Route path="sign-in" element={<SignIn />} />
+      </Route>
+    </Routes>
   );
 };
 
