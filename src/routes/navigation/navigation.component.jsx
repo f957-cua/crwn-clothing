@@ -1,26 +1,44 @@
+import { useContext } from "react";
 import { Outlet, Link } from "react-router-dom";
 import { ReactComponent as CrwnLogo } from "../../assets/crown.svg";
+import { UserContext } from "../../context/user.context";
 
 import "./navigation.styles.scss";
+import { signOutAuthUser } from "../../utils/firebase/firebase.utils";
 
-const Navigation = () => (
-  <>
-    <div className="navigation">
-      <Link className="logo-container" to="/">
-        <CrwnLogo />
-      </Link>
+const Navigation = () => {
+  const { currentUser, setCurrentUser } = useContext(UserContext);
 
-      <div className="nav-links-container">
-        <Link className="nav-link" to="/shop">
-          SHOP
+  const signOutHandler = async () => {
+    await signOutAuthUser();
+    setCurrentUser(null);
+  };
+
+  return (
+    <>
+      <div className="navigation">
+        <Link className="logo-container" to="/">
+          <CrwnLogo />
         </Link>
-        <Link className="nav-link" to="/sign-in">
-          SIGN-IN
-        </Link>
+
+        <div className="nav-links-container">
+          <Link className="nav-link" to="/shop">
+            SHOP
+          </Link>
+          {currentUser ? (
+            <span className="nav-link" onClick={signOutHandler}>
+              SIGN OUT
+            </span>
+          ) : (
+            <Link className="nav-link" to="/auth">
+              SIGN-IN
+            </Link>
+          )}
+        </div>
       </div>
-    </div>
-    <Outlet />
-  </>
-);
+      <Outlet />
+    </>
+  );
+};
 
 export default Navigation;
