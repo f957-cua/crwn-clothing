@@ -7,7 +7,12 @@ import { ReactComponent as CrwnLogo } from "../../assets/crown.svg";
 import { UserContext } from "../../context/user.context";
 import { CartContext } from "../../context/cart.context";
 
-import "./navigation.styles.scss";
+import {
+  NavigationContainer,
+  LogoContainer,
+  NavLinks,
+  NavLink,
+} from "./navigation.styles.jsx";
 import { signOutAuthUser } from "../../utils/firebase/firebase.utils";
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
 
@@ -22,28 +27,25 @@ const Navigation = () => {
 
   return (
     <>
-      <div className="navigation">
-        <Link className="logo-container" to="/">
+      <NavigationContainer>
+        <LogoContainer to="/">
           <CrwnLogo />
-        </Link>
-
-        <div className="nav-links-container">
+        </LogoContainer>
+        <NavLinks>
           <Link className="nav-link" to="/shop">
             SHOP
           </Link>
           {currentUser ? (
-            <span className="nav-link" onClick={signOutHandler}>
+            <NavLink as="span" onClick={signOutHandler}>
               SIGN OUT
-            </span>
+            </NavLink>
           ) : (
-            <Link className="nav-link" to="/auth">
-              SIGN-IN
-            </Link>
+            <NavLink to="/auth">SIGN-IN</NavLink>
           )}
           <CartIcon />
-        </div>
+        </NavLinks>
         {open && <CartDropdown />}
-      </div>
+      </NavigationContainer>
       <Outlet />
     </>
   );
